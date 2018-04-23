@@ -1,0 +1,75 @@
+apiVersion: batch/v2alpha1
+kind: CronJob
+metadata:
+  labels:
+    qcloud-app: dbjob-cron
+  name: dbjob-cron
+  namespace: $NAMESPACE
+spec:
+  schedule: "30 23 * * *"
+  jobTemplate:
+    metadata:
+      annotations:
+        cloud.tencent.com/volume-configmap-info: '[]'
+      labels:
+        qcloud-app: dbjob-cron
+    spec:
+      containers:
+      - args:
+        - su
+        - root
+        - -c
+        - /bin/bash -x ./pg_backup_rotated.sh      
+        env:
+        - name: POSTGRES_USER
+          value: odoo
+        - name: POSTGRES_PASSWORD
+          value: odoo
+        - name: PGPASSWORD
+          value: odoo
+        image: postgres:9.5
+        imagePullPolicy: Always
+        name: dbjob
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 250m
+            memory: 256Mi
+        securityContext:
+          privileged: false
+        terminationMessagePath: /dev/termination-log
+        volumeMounts:
+        - mountPath: /mnt/backup/db
+          name: dbbackup
+        - mountPath: /mnt/backup/filestore
+          name: filestorebackup
+        - mountPath: /mnt/backup/addons
+          name: addonsbackup
+        - mountPath: /mnt/backupscript
+          name: backupscript                  
+      dnsPolicy: ClusterFirst
+      imagePullSecrets:
+      - name: qcloudregistrykey
+      restartPolicy: Always
+      securityContext: {}
+      serviceAccountName: ""
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: dbbackup
+        nfs:
+          path: /odoo-saas/{{.NAMESPACE}}/backup/db
+          server: 10.0.3.13
+      - name: filestorebackup
+        nfs:
+          path: /odoo-saas/{{.NAMESPACE}}/backup/filestore
+          server: 10.0.3.13
+      - name: addonsbackup
+        nfs:
+          path: /odoo-saas/{{.NAMESPACE}}/backup/addons
+          server: 10.0.3.1
+      - name: backupscript
+        nfs:
+          path: /odoo-saas/dbbackup
+          server: 10.0.3.13
