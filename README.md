@@ -1,5 +1,6 @@
 # dbjob_cron
 
+
 ns=pro
 export ns
 sudo -i
