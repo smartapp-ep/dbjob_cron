@@ -1,3 +1,8 @@
 # dbjob_cron
 
-cat dbjob_cron.yaml | sed "s/\$NAMESPACE/$ns/" > ./jobs/dbjob_cron-$ns.yaml
+ns=pro
+export ns
+sudo -i
+cat dbjob_cron.yaml | sed "s/\$NAMESPACE/$ns/" > dbjob_cron-$ns.yaml
+
+kubectl create -f ./dbjob_cron-$ns.yaml
