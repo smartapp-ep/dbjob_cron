@@ -11,8 +11,9 @@ cat dbjob_cron.yaml | sed "s/\$NAMESPACE/$ns/" > dbjob_cron-$ns.yaml
 
 kubectl create -f ./dbjob_cron-$ns.yaml
 
+exit 
 
-kubectl get cronjob dbjob_cron
+kubectl get cronjob dbjob_cron --namespace prod
 
 kubectl get jobs --watch
 
