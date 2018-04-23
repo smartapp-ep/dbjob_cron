@@ -59,15 +59,15 @@ spec:
       volumes:
       - name: dbbackup
         nfs:
-          path: /odoo-saas/{{.NAMESPACE}}/backup/db
+          path: /odoo-saas/$NAMESPACE/backup/db
           server: 10.0.3.13
       - name: filestorebackup
         nfs:
-          path: /odoo-saas/{{.NAMESPACE}}/backup/filestore
+          path: /odoo-saas/$NAMESPACE/backup/filestore
           server: 10.0.3.13
       - name: addonsbackup
         nfs:
-          path: /odoo-saas/{{.NAMESPACE}}/backup/addons
+          path: /odoo-saas/$NAMESPACE/backup/addons
           server: 10.0.3.1
       - name: backupscript
         nfs:
