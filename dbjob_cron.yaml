@@ -70,7 +70,7 @@ spec:
           - name: addonsbackup
             nfs:
               path: /odoo-saas/$NAMESPACE/backup/addons
-              server: 10.0.3.1
+              server: 10.0.3.13
           - name: backupscript
             nfs:
               path: /odoo-saas/dbbackup
