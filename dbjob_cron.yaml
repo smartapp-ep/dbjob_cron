@@ -73,5 +73,5 @@ spec:
               server: 10.0.3.13
           - name: backupscript
             nfs:
-              path: /odoo-saas/dbbackup
-              server: 10.0.3.13
+              path: /prod/db
+              server: 10.0.4.9
