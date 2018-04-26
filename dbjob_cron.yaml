@@ -21,7 +21,7 @@ spec:
             - su
             - root
             - -c
-            - /bin/bash -x ./pg_backup_rotated.sh      
+            - /bin/bash -x /mnt/backupscript/pg_backup_rotated.sh      
             env:
             - name: POSTGRES_USER
               value: odoo
