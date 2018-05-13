@@ -43,12 +43,10 @@ spec:
               privileged: false
             terminationMessagePath: /dev/termination-log
             volumeMounts:
-            - mountPath: /mnt/backup/db
-              name: dbbackup
-            - mountPath: /mnt/backup/filestore
-              name: filestorebackup
-            - mountPath: /mnt/backup/addons
-              name: addonsbackup
+            - mountPath: /mnt/data-dir
+              name: data-dir
+            - mountPath: /mnt/backup
+              name: backup
             - mountPath: /mnt/backupscript
               name: backupscript                  
           dnsPolicy: ClusterFirst
@@ -59,17 +57,13 @@ spec:
           serviceAccountName: ""
           terminationGracePeriodSeconds: 30
           volumes:
-          - name: dbbackup
+          - name: data-dir
             nfs:
-              path: /$NAMESPACE/db
-              server: 10.0.4.9
-          - name: filestorebackup
+              path: /odoo-saas/$NAMESPACE/data-dir
+              server: 10.0.3.13
+          - name: backup
             nfs:
-              path: /$NAMESPACE/filestore
-              server: 10.0.4.9
-          - name: addonsbackup
-            nfs:
-              path: /$NAMESPACE/addons
+              path: /$NAMESPACE
               server: 10.0.4.9
           - name: backupscript
             nfs:
