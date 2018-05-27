@@ -26,9 +26,15 @@ spec:
             - name: POSTGRES_USER
               value: odoo
             - name: POSTGRES_PASSWORD
-              value: odoo
+              valueFrom:
+                secretKeyRef:
+                  name: pass
+                  key: pw
             - name: PGPASSWORD
-              value: odoo
+              valueFrom:
+                secretKeyRef:
+                  name: pass
+                  key: pw
             image: postgres:9.5
             imagePullPolicy: Always
             name: dbjob
