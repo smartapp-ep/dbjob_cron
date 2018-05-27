@@ -2,7 +2,7 @@
 
 sudo -i
 
-ns=pro
+ns=prod
 
 export ns
 
@@ -13,7 +13,7 @@ kubectl create -f ./dbjob_cron-$ns.yaml
 
 exit 
 
-kubectl get cronjob dbjob_cron --namespace prod
+kubectl get cronjob dbjob-cron --namespace prod
 
 kubectl get jobs --watch
 
